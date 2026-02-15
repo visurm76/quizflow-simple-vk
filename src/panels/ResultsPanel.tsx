@@ -9,7 +9,6 @@ import {
   Button,
   Card,
   Spacing,
-  Banner,
   SimpleCell,
   Headline,
 } from '@vkontakte/vkui';
@@ -69,14 +68,17 @@ const ResultsPanel: React.FC<Props> = ({ id, result, onRestart, doctorLink }) =>
 
           <Spacing size={16} />
 
-          <Banner
+          {/* Заменяем Banner на простую кнопку */}
+          <Button
+            size="l"
+            stretched
+            mode="primary"
             before={<Icon28DocumentOutline />}
-            header="Сохранить результаты"
-            subheader="Скачать в PDF или отправить на email"
-            actions={[{ title: 'Скачать', mode: 'primary', onClick: handleExport }]}
-          />
-
-          <Spacing size={16} />
+            onClick={handleExport}
+            style={{ marginBottom: 16 }}
+          >
+            Скачать результаты
+          </Button>
 
           <Box style={{ display: 'flex', gap: 8, flexDirection: 'column' }}>
             <Button size="l" stretched onClick={handleDoctorAppointment}>
