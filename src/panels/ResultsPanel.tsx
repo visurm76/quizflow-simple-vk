@@ -1,20 +1,7 @@
-import React from 'react';
-import {
-  Panel,
-  PanelHeader,
-  Group,
-  Box,
-  Title,
-  Text,
-  Button,
-  Card,
-  Spacing,
-  SimpleCell,
-  Headline,
-} from '@vkontakte/vkui';
+import { Panel, PanelHeader, Group, Box, Title, Text, Button, Card, Spacing, SimpleCell, Headline } from '@vkontakte/vkui';
 import { Icon28DocumentOutline } from '@vkontakte/icons';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
-import bridge, { VKWebAppOpenExternalLink } from '@vkontakte/vk-bridge';
+import bridge from '@vkontakte/vk-bridge';
 import { TestResult } from '../types';
 
 interface Props {
@@ -31,7 +18,8 @@ const ResultsPanel: React.FC<Props> = ({ id, result, onRestart, doctorLink }) =>
 
   const handleDoctorAppointment = () => {
     if (doctorLink) {
-      bridge.send('VKWebAppOpenExternalLink', { link: doctorLink } as VKWebAppOpenExternalLink);
+      // Приведение типа для совместимости с TypeScript
+      bridge.send('VKWebAppOpenExternalLink' as any, { link: doctorLink });
     } else {
       alert('QR-код для записи к врачу');
     }

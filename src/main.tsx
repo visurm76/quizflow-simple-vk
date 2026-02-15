@@ -1,21 +1,24 @@
-import ReactDOM from 'react-dom/client';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { RouterProvider, createHashRouter } from '@vkontakte/vk-mini-apps-router';
 import { AdaptivityProvider, ConfigProvider } from '@vkontakte/vkui';
 import bridge from '@vkontakte/vk-bridge';
 import { App } from './App';
 import { routes } from './routes';
-import '@vkontakte/vkui/dist/vkui.css';
+import '@vkontakte/vkui/dist/vkui.css'; // обязательно для стилей
 
 bridge.send('VKWebAppInit');
 
 const router = createHashRouter(routes.getRoutes());
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <RouterProvider router={router}>
-    <ConfigProvider>
-      <AdaptivityProvider>
-        <App />
-      </AdaptivityProvider>
-    </ConfigProvider>
-  </RouterProvider>
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <RouterProvider router={router}>
+      <ConfigProvider>
+        <AdaptivityProvider>
+          <App />
+        </AdaptivityProvider>
+      </ConfigProvider>
+    </RouterProvider>
+  </StrictMode>
 );
