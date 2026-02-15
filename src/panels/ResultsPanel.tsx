@@ -15,7 +15,6 @@ import {
 } from '@vkontakte/vkui';
 import { Icon28DocumentOutline, Icon28QrCodeOutline } from '@vkontakte/icons';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
-import bridge from '@vkontakte/vk-bridge';
 import { QRCodeCanvas } from 'qrcode.react';
 import { TestResult } from '../types';
 
@@ -92,16 +91,13 @@ const ResultsPanel: React.FC<Props> = ({ id, result, onRestart, doctorLink = 'ht
         </Box>
       </Group>
 
-      <ModalCard
-        open={modalOpened}
-        onClose={() => setModalOpened(false)}
-        header="Запись к врачу"
-        subheader="Отсканируйте QR-код для перехода в мессенджер Макс"
-      >
-        <Box style={{ display: 'flex', justifyContent: 'center', padding: 16 }}>
-          <QRCodeCanvas value={doctorLink} size={200} />
-        </Box>
-        <Box style={{ display: 'flex', justifyContent: 'center', padding: '0 16px 16px' }}>
+      <ModalCard open={modalOpened} onClose={() => setModalOpened(false)}>
+        <Box style={{ padding: 16, textAlign: 'center' }}>
+          <Title level="2" style={{ marginBottom: 8 }}>Запись к врачу</Title>
+          <Text weight="2" style={{ marginBottom: 16 }}>Отсканируйте QR-код для перехода в мессенджер Макс</Text>
+          <Box style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
+            <QRCodeCanvas value={doctorLink} size={200} />
+          </Box>
           <Button size="l" mode="secondary" onClick={() => setModalOpened(false)}>
             Закрыть
           </Button>
