@@ -1,19 +1,13 @@
 import { useState, useEffect } from 'react';
-import {
-  AppRoot,
-  SplitLayout,
-  SplitCol,
-  View,
-  PanelHeader,
-  Button,
-} from '@vkontakte/vkui';
+import { AppRoot, SplitLayout, SplitCol, View } from '@vkontakte/vkui';
 import { useActiveVkuiLocation, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
-import { PANEL_DESCRIPTION, PANEL_TEST, PANEL_RESULTS } from './routes';
+
+import { fetchConfig } from './api';
+import { AppConfig, UserAnswer, TestResult } from './types';
 import DescriptionPanel from './panels/DescriptionPanel';
 import TestPanel from './panels/TestPanel';
 import ResultsPanel from './panels/ResultsPanel';
-import { fetchConfig } from './api';
-import { AppConfig, UserAnswer, TestResult } from './types';
+import { PANEL_DESCRIPTION, PANEL_TEST, PANEL_RESULTS } from './routes';
 
 function computeResult(answers: UserAnswer[], config: AppConfig): TestResult {
   let totalScore = 0;
@@ -82,9 +76,9 @@ export const App = () => {
 
   return (
     <AppRoot>
-      <SplitLayout header={<PanelHeader delimiter="none" />}>
+      <SplitLayout>
         <SplitCol>
-          <View id="main" activePanel={panel || PANEL_DESCRIPTION}>
+          <View activePanel={panel || PANEL_DESCRIPTION}>
             <DescriptionPanel id={PANEL_DESCRIPTION} disease={config.disease} />
             <TestPanel
               id={PANEL_TEST}

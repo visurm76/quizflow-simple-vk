@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Panel,
   PanelHeader,
@@ -13,7 +14,7 @@ import {
 } from '@vkontakte/vkui';
 import { Icon28DocumentOutline } from '@vkontakte/icons';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
-import bridge, { VKBridgeSend } from '@vkontakte/vk-bridge';
+import bridge, { VKWebAppOpenExternalLink } from '@vkontakte/vk-bridge';
 import { TestResult } from '../types';
 
 interface Props {
@@ -23,15 +24,14 @@ interface Props {
   doctorLink?: string;
 }
 
-const ResultsPanel = ({ id, result, onRestart, doctorLink }: Props) => {
+const ResultsPanel: React.FC<Props> = ({ id, result, onRestart, doctorLink }) => {
   const navigator = useRouteNavigator();
 
   if (!result) return null;
 
   const handleDoctorAppointment = () => {
     if (doctorLink) {
-      // Приведение типа для избежания ошибки TS
-      (bridge.send as VKBridgeSend)('VKWebAppOpenExternalLink', { link: doctorLink });
+      bridge.send('VKWebAppOpenExternalLink', { link: doctorLink } as VKWebAppOpenExternalLink);
     } else {
       alert('QR-код для записи к врачу');
     }
