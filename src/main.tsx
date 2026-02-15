@@ -1,5 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 import { RouterProvider, createHashRouter } from '@vkontakte/vk-mini-apps-router';
 import { AdaptivityProvider, ConfigProvider } from '@vkontakte/vkui';
 import bridge from '@vkontakte/vk-bridge';
@@ -11,7 +10,7 @@ bridge.send('VKWebAppInit');
 
 const router = createHashRouter(routes.getRoutes());
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById('root')!).render(
   <RouterProvider router={router}>
     <ConfigProvider>
       <AdaptivityProvider>

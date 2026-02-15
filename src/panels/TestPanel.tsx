@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Panel,
   PanelHeader,
@@ -22,7 +22,7 @@ interface Props {
   onComplete: (answers: UserAnswer[]) => void;
 }
 
-const TestPanel: React.FC<Props> = ({ id, questions, onComplete }) => {
+const TestPanel = ({ id, questions, onComplete }: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<UserAnswer[]>([]);
   const [selected, setSelected] = useState<string[]>([]);

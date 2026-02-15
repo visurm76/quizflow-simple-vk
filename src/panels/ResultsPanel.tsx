@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Panel,
   PanelHeader,
@@ -14,7 +13,7 @@ import {
 } from '@vkontakte/vkui';
 import { Icon28DocumentOutline } from '@vkontakte/icons';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
-import bridge from '@vkontakte/vk-bridge';
+import bridge, { VKBridgeSend } from '@vkontakte/vk-bridge';
 import { TestResult } from '../types';
 
 interface Props {
@@ -24,14 +23,15 @@ interface Props {
   doctorLink?: string;
 }
 
-const ResultsPanel: React.FC<Props> = ({ id, result, onRestart, doctorLink }) => {
+const ResultsPanel = ({ id, result, onRestart, doctorLink }: Props) => {
   const navigator = useRouteNavigator();
 
   if (!result) return null;
 
   const handleDoctorAppointment = () => {
     if (doctorLink) {
-      bridge.send('VKWebAppOpenExternalLink', { link: doctorLink });
+      // Приведение типа для избежания ошибки TS
+      (bridge.send as VKBridgeSend)('VKWebAppOpenExternalLink', { link: doctorLink });
     } else {
       alert('QR-код для записи к врачу');
     }
@@ -68,7 +68,6 @@ const ResultsPanel: React.FC<Props> = ({ id, result, onRestart, doctorLink }) =>
 
           <Spacing size={16} />
 
-          {/* Заменяем Banner на простую кнопку */}
           <Button
             size="l"
             stretched

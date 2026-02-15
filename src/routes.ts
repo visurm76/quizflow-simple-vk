@@ -1,5 +1,4 @@
 import {
-  createHashRouter,
   createPanel,
   createRoot,
   createView,

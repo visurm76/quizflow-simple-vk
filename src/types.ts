@@ -1,18 +1,21 @@
-// Типы для конфига приложения
-export interface DiseaseInfo {
-  name: string;
-  description: string;
-  causes: string[];
-  symptoms: string[];
-  diagnosis: string[];
-  treatment: string[];
+export interface MediaItem {
+  type: 'image' | 'video' | 'audio';
+  url: string;
+  caption?: string;
+}
+
+export interface Lesson {
+  id: string;
+  title: string;
+  content: string; // HTML-текст
+  media: MediaItem[];
 }
 
 export interface Answer {
   id: string;
   text: string;
-  score: number;        // баллы за этот ответ
-  explanation: string;   // объяснение после ответа
+  score: number;
+  explanation: string;
 }
 
 export interface Question {
@@ -25,10 +28,19 @@ export interface Question {
 export interface ScoreRange {
   min: number;
   max: number;
-  level: string;            // например "Низкий", "Средний", "Высокий"
-  color: string;            // цвет для отображения
-  interpretation: string;   // краткая интерпретация
-  recommendations: string[]; // список рекомендаций
+  level: string;
+  color: string;
+  interpretation: string;
+  recommendations: string[];
+}
+
+export interface DiseaseInfo {
+  name: string;
+  description: string;
+  causes: string[];
+  symptoms: string[];
+  diagnosis: string[];
+  treatment: string[];
 }
 
 export interface AppConfig {
@@ -42,10 +54,9 @@ export interface AppConfig {
   };
 }
 
-// Типы для состояния пользователя
 export interface UserAnswer {
   questionId: number;
-  selectedAnswerIds: string[]; // массив id выбранных ответов
+  selectedAnswerIds: string[];
 }
 
 export interface TestResult {

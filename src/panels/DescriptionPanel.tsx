@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Panel,
   PanelHeader,
@@ -20,7 +19,7 @@ interface Props {
   disease: DiseaseInfo;
 }
 
-const DescriptionPanel: React.FC<Props> = ({ id, disease }) => {
+const DescriptionPanel = ({ id, disease }: Props) => {
   const navigator = useRouteNavigator();
 
   return (

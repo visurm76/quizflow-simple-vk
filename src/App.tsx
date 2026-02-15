@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { AppRoot, SplitLayout, SplitCol, View } from '@vkontakte/vkui';
+import { useState, useEffect } from 'react';
+import {
+  AppRoot,
+  SplitLayout,
+  SplitCol,
+  View,
+  PanelHeader,
+  Button,
+} from '@vkontakte/vkui';
 import { useActiveVkuiLocation, useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import { PANEL_DESCRIPTION, PANEL_TEST, PANEL_RESULTS } from './routes';
-
-import { fetchConfig } from './api';
-import { AppConfig, UserAnswer, TestResult } from './types';
 import DescriptionPanel from './panels/DescriptionPanel';
 import TestPanel from './panels/TestPanel';
 import ResultsPanel from './panels/ResultsPanel';
+import { fetchConfig } from './api';
+import { AppConfig, UserAnswer, TestResult } from './types';
 
 function computeResult(answers: UserAnswer[], config: AppConfig): TestResult {
   let totalScore = 0;
@@ -40,7 +46,6 @@ export const App = () => {
 
   const [config, setConfig] = useState<AppConfig | null>(null);
   const [loading, setLoading] = useState(true);
-  const [answers, setAnswers] = useState<UserAnswer[]>([]);
   const [result, setResult] = useState<TestResult | null>(null);
 
   useEffect(() => {
@@ -56,7 +61,6 @@ export const App = () => {
   }, []);
 
   const handleTestComplete = (completedAnswers: UserAnswer[]) => {
-    setAnswers(completedAnswers);
     if (config) {
       const res = computeResult(completedAnswers, config);
       setResult(res);
@@ -64,7 +68,6 @@ export const App = () => {
   };
 
   const handleRestart = () => {
-    setAnswers([]);
     setResult(null);
     navigator.push('/');
   };
@@ -79,7 +82,7 @@ export const App = () => {
 
   return (
     <AppRoot>
-      <SplitLayout>
+      <SplitLayout header={<PanelHeader delimiter="none" />}>
         <SplitCol>
           <View id="main" activePanel={panel || PANEL_DESCRIPTION}>
             <DescriptionPanel id={PANEL_DESCRIPTION} disease={config.disease} />
