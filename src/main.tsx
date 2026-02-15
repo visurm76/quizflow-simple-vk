@@ -1,11 +1,22 @@
-import { createRoot } from 'react-dom/client';
-import vkBridge from '@vkontakte/vk-bridge';
-import { AppConfig } from './AppConfig.tsx';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { RouterProvider, createHashRouter } from '@vkontakte/vk-mini-apps-router';
+import { AdaptivityProvider, ConfigProvider } from '@vkontakte/vkui';
+import bridge from '@vkontakte/vk-bridge';
+import { App } from './App';
+import { routes } from './routes';
+import '@vkontakte/vkui/dist/vkui.css';
 
-vkBridge.send('VKWebAppInit');
+bridge.send('VKWebAppInit');
 
-createRoot(document.getElementById('root')!).render(<AppConfig />);
+const router = createHashRouter(routes.getRoutes());
 
-if (import.meta.env.MODE === 'development') {
-  import('./eruda.ts');
-}
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <RouterProvider router={router}>
+    <ConfigProvider>
+      <AdaptivityProvider>
+        <App />
+      </AdaptivityProvider>
+    </ConfigProvider>
+  </RouterProvider>
+);
