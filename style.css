@@ -1,0 +1,7 @@
+.user-mode .toolbar,
+.user-mode .sidebar-header button:not(.mode-toggle), /* если нужно оставить кнопку переключения режима */
+.user-mode .section-actions .btn-primary,
+.user-mode .add-question-section,
+.user-mode .delete-lesson {
+    display: none !important;
+}
