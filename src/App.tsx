@@ -91,7 +91,7 @@ export const App = () => {
               id={PANEL_RESULTS}
               result={result}
               onRestart={handleRestart}
-              doctorLink="https://max.ru/appointment" // ссылка на мессенджер Макс
+              doctorLink="https://max.ru/zdrav36_bot" // ссылка на мессенджер Макс
             />
           </View>
         </SplitCol>

@@ -12,8 +12,6 @@ import {
   SimpleCell,
   Headline,
   ModalCard,
-  ModalRoot,
-  useModalRootContext,
 } from '@vkontakte/vkui';
 import { Icon28DocumentOutline, Icon28QrCodeOutline } from '@vkontakte/icons';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
@@ -25,7 +23,7 @@ interface Props {
   id: string;
   result: TestResult | null;
   onRestart: () => void;
-  doctorLink?: string; // ссылка для записи (например, на мессенджер Макс)
+  doctorLink?: string;
 }
 
 const ResultsPanel: React.FC<Props> = ({ id, result, onRestart, doctorLink = 'https://max.ru/appointment' }) => {
@@ -47,27 +45,6 @@ const ResultsPanel: React.FC<Props> = ({ id, result, onRestart, doctorLink = 'ht
     a.download = 'result.json';
     a.click();
   };
-
-  const modal = (
-    <ModalCard
-      id="qr-modal"
-      open={modalOpened}
-      onClose={() => setModalOpened(false)}
-      header="Запись к врачу"
-      subheader="Отсканируйте QR-код для перехода в мессенджер Макс"
-      actions={[
-        {
-          title: 'Закрыть',
-          mode: 'secondary',
-          onClick: () => setModalOpened(false),
-        },
-      ]}
-    >
-      <Box style={{ display: 'flex', justifyContent: 'center', padding: 16 }}>
-        <QRCodeCanvas value={doctorLink} size={200} />
-      </Box>
-    </ModalCard>
-  );
 
   return (
     <Panel id={id}>
@@ -114,7 +91,22 @@ const ResultsPanel: React.FC<Props> = ({ id, result, onRestart, doctorLink = 'ht
           </Box>
         </Box>
       </Group>
-      {modal}
+
+      <ModalCard
+        open={modalOpened}
+        onClose={() => setModalOpened(false)}
+        header="Запись к врачу"
+        subheader="Отсканируйте QR-код для перехода в мессенджер Макс"
+      >
+        <Box style={{ display: 'flex', justifyContent: 'center', padding: 16 }}>
+          <QRCodeCanvas value={doctorLink} size={200} />
+        </Box>
+        <Box style={{ display: 'flex', justifyContent: 'center', padding: '0 16px 16px' }}>
+          <Button size="l" mode="secondary" onClick={() => setModalOpened(false)}>
+            Закрыть
+          </Button>
+        </Box>
+      </ModalCard>
     </Panel>
   );
 };
