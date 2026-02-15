@@ -1,28 +1,41 @@
-import { Panel, PanelHeader, Group, Box, Title, Text, Button, Card, Spacing, SimpleCell, Headline } from '@vkontakte/vkui';
-import { Icon28DocumentOutline } from '@vkontakte/icons';
+import { useState } from 'react';
+import {
+  Panel,
+  PanelHeader,
+  Group,
+  Box,
+  Title,
+  Text,
+  Button,
+  Card,
+  Spacing,
+  SimpleCell,
+  Headline,
+  ModalCard,
+  ModalRoot,
+  useModalRootContext,
+} from '@vkontakte/vkui';
+import { Icon28DocumentOutline, Icon28QrCodeOutline } from '@vkontakte/icons';
 import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
 import bridge from '@vkontakte/vk-bridge';
+import { QRCodeCanvas } from 'qrcode.react';
 import { TestResult } from '../types';
 
 interface Props {
   id: string;
   result: TestResult | null;
   onRestart: () => void;
-  doctorLink?: string;
+  doctorLink?: string; // ссылка для записи (например, на мессенджер Макс)
 }
 
-const ResultsPanel: React.FC<Props> = ({ id, result, onRestart, doctorLink }) => {
+const ResultsPanel: React.FC<Props> = ({ id, result, onRestart, doctorLink = 'https://max.ru/appointment' }) => {
   const navigator = useRouteNavigator();
+  const [modalOpened, setModalOpened] = useState(false);
 
   if (!result) return null;
 
   const handleDoctorAppointment = () => {
-    if (doctorLink) {
-      // Приведение типа для совместимости с TypeScript
-      bridge.send('VKWebAppOpenExternalLink' as any, { link: doctorLink });
-    } else {
-      alert('QR-код для записи к врачу');
-    }
+    setModalOpened(true);
   };
 
   const handleExport = () => {
@@ -34,6 +47,27 @@ const ResultsPanel: React.FC<Props> = ({ id, result, onRestart, doctorLink }) =>
     a.download = 'result.json';
     a.click();
   };
+
+  const modal = (
+    <ModalCard
+      id="qr-modal"
+      open={modalOpened}
+      onClose={() => setModalOpened(false)}
+      header="Запись к врачу"
+      subheader="Отсканируйте QR-код для перехода в мессенджер Макс"
+      actions={[
+        {
+          title: 'Закрыть',
+          mode: 'secondary',
+          onClick: () => setModalOpened(false),
+        },
+      ]}
+    >
+      <Box style={{ display: 'flex', justifyContent: 'center', padding: 16 }}>
+        <QRCodeCanvas value={doctorLink} size={200} />
+      </Box>
+    </ModalCard>
+  );
 
   return (
     <Panel id={id}>
@@ -68,7 +102,7 @@ const ResultsPanel: React.FC<Props> = ({ id, result, onRestart, doctorLink }) =>
           </Button>
 
           <Box style={{ display: 'flex', gap: 8, flexDirection: 'column' }}>
-            <Button size="l" stretched onClick={handleDoctorAppointment}>
+            <Button size="l" stretched before={<Icon28QrCodeOutline />} onClick={handleDoctorAppointment}>
               Записаться к врачу
             </Button>
             <Button size="l" stretched mode="secondary" onClick={onRestart}>
@@ -80,6 +114,7 @@ const ResultsPanel: React.FC<Props> = ({ id, result, onRestart, doctorLink }) =>
           </Box>
         </Box>
       </Group>
+      {modal}
     </Panel>
   );
 };

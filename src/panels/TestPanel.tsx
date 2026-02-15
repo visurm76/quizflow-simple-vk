@@ -22,7 +22,7 @@ interface Props {
   onComplete: (answers: UserAnswer[]) => void;
 }
 
-const TestPanel = ({ id, questions, onComplete }: Props) => {
+const TestPanel: React.FC<Props> = ({ id, questions, onComplete }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<UserAnswer[]>([]);
   const [selected, setSelected] = useState<string[]>([]);

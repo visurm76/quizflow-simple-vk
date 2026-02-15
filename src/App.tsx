@@ -39,7 +39,7 @@ export const App = () => {
 
   const [config, setConfig] = useState<AppConfig | null>(null);
   const [loading, setLoading] = useState(true);
-  const [, setAnswers] = useState<UserAnswer[]>([]); // оставляем, но не используем напрямую
+  const [, setAnswers] = useState<UserAnswer[]>([]);
   const [result, setResult] = useState<TestResult | null>(null);
 
   useEffect(() => {
@@ -91,7 +91,7 @@ export const App = () => {
               id={PANEL_RESULTS}
               result={result}
               onRestart={handleRestart}
-              doctorLink="https://example.com/appointment"
+              doctorLink="https://max.ru/appointment" // ссылка на мессенджер Макс
             />
           </View>
         </SplitCol>

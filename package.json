@@ -17,6 +17,7 @@
     "@vkontakte/vk-bridge-react": "^1.1.2",
     "@vkontakte/vk-mini-apps-router": "^1.8.4",
     "@vkontakte/vkui": "^7.11.5",
+    "qrcode.react": "^4.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
